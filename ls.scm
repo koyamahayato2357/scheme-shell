@@ -14,7 +14,7 @@
       (let ((a (car argv)))
         (if (null? a)
           (apply orelse (cdr argv))
-          (car a))))))
+          a)))))
 
 (define ls
   (lambda argv
