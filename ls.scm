@@ -16,6 +16,17 @@
           (apply orelse (cdr argv))
           a)))))
 
+(define long-format
+  (lambda (name)
+    (call-with-input-file
+      name
+      (lambda (port)
+        (list
+          (get-mode name)
+          (file-length port)
+          (file-modification-time port)
+          name)))))
+
 (define ls
   (lambda argv
     (let ((name (orelse (first-non-option argv) ".")))
