@@ -1,14 +1,8 @@
-(define first-non-option
-  (lambda argv
-    (if (null? argv)
-      '()
-      (let ((a (car argv)))
-        (if (and (string? a) (= #\- (string-ref a 0)))
-          (first-non-option (cdr argv))
-          a)))))
 (load "lib.scm")
 
+(define fst-c-eq (lambda (c s) (char=? c (string-ref s 0))))
 
+(define option? (lambda (s) (not (fst-c-eq #\- s))))
 
 (define long-format
   (lambda (name)
@@ -21,9 +15,15 @@
           (file-modification-time port)
           name)))))
 
+(define default-filter (lambda (s) (fst-c-eq #\. s)))
+
+(define file-dir
+  (lambda (name)
+    (if (file-dir name)
+      (directory-list name)
+      (if (file-exists? name) name '()))))
+
 (define ls
   (lambda argv
-    (let ((name (orelse (first-non-option argv) ".")))
-      (if (file-directory? name)
-        (directory-list name)
-        (if (file-exists? name) name '())))))
+    (let ((names (orelse (filter option? argv) '("."))))
+      (map file-dir names))))
