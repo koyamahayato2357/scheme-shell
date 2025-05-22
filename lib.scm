@@ -4,14 +4,17 @@
 (define (curry f . argv)
   (lambda a (apply f (append argv a))))
 
-(define (pipe-apply fns a)
-  (if (null? fns) a (pipe-apply (cdr fns) ((car fns) a))))
+(define pipe
+  (curry fold-left (lambda (x f) (f x))))
+
+(define (pipef . fns)
+  (curry (flip pipe) fns))
 
 (define (pipe-map fns args)
-  (map (compose fns) args))
+  (map (pipef fns) args))
 
-(define (pipe . fns)
-  (curry pipe-apply fns))
+(define (compose . fns)
+  (curry pipef (reverse fns)))
 
 (define (orelse . argv)
-  (or (find (compose null? not) argv) '()))
+  (or (find (pipef null? not) argv) '()))
