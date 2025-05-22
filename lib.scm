@@ -6,6 +6,11 @@
   (lambda (fns args)
     (map (lambda (a) (pipe a fns)) args)))
 
+; (compose f g) = (lambda (x) (g (f x)))
+(define compose
+  (lambda fns
+    (lambda (x) (pipe x fns))))
+
 (define orelse
   (lambda argv
     (if (null? argv)
