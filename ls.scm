@@ -6,15 +6,9 @@
         (if (and (string? a) (= #\- (string-ref a 0)))
           (first-non-option (cdr argv))
           a)))))
+(load "lib.scm")
 
-(define orelse
-  (lambda argv
-    (if (null? argv)
-      '()
-      (let ((a (car argv)))
-        (if (null? a)
-          (apply orelse (cdr argv))
-          a)))))
+
 
 (define long-format
   (lambda (name)
