@@ -2,7 +2,7 @@
 
 (define (fst-c-eq c s) (char=? c (string-ref s 0)))
 
-(define (option? s) (not (fst-c-eq #\- s)))
+(define option? (curry fst-c-eq #\-))
 
 (define (long-format name)
   (call-with-input-file
@@ -22,5 +22,5 @@
     (if (file-exists? name) name '())))
 
 (define (ls . argv)
-  (let ((names (orelse (filter option? argv) '("."))))
+  (let ((names (orelse (filter (pipef option? not) argv) '("."))))
     (map file-dir names)))
