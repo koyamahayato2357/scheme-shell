@@ -10,8 +10,8 @@
 (define (pipef . fns)
   (curry (flip pipe) fns))
 
-(define (pipe-map fns args)
-  (map (pipef fns) args))
+(define (pipe-map fns argv)
+  (map (pipef fns) argv))
 
 (define (compose . fns)
   (curry pipef (reverse fns)))
