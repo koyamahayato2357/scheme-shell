@@ -14,7 +14,7 @@
         (file-modification-time port)
         name))))
 
-(define (default-filter s) (fst-c-eq #\. s))
+(define default-filter (curry fst-c-eq #\.))
 
 (define (file-dir name)
   (if (file-dir name)
