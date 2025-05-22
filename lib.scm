@@ -1,3 +1,9 @@
+(define (flip f)
+  (lambda (a b) (f b a)))
+
+(define (curry f . argv)
+  (lambda a (apply f (append argv a))))
+
 (define (pipe a fns)
   (if (null? fns) a (pipe ((car fns) a) (cdr fns))))
 
