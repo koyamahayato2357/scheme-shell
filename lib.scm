@@ -1,8 +1,6 @@
 (define pipe
-  (lambda (arg fns)
-    (if (null? fns)
-      arg
-      (pipe ((car fns) arg) (cdr fns)))))
+  (lambda (a fns)
+    (if (null? fns) a (pipe ((car fns) a) (cdr fns)))))
 
 (define pipe-map
   (lambda (fns args)
