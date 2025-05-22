@@ -13,9 +13,4 @@
 
 (define orelse
   (lambda argv
-    (if (null? argv)
-      '()
-      (let ((a (car argv)))
-        (if (null? a)
-          (apply orelse (cdr argv))
-          a)))))
+    (or (find (compose null? not) argv) '())))
